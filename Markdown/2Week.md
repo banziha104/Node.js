@@ -38,3 +38,7 @@ account.setId('abc').setPassword('1234');
 account.print();
  
 ```
+
+# 프로토타입
+
+jQuery

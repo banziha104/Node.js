@@ -15,11 +15,9 @@
 //
 // console.log(test.a);
 // console.log(test.b);
-test("haha","kkk",function () {
-    for(var i = 0 ; i < arguments.length ; i++){
-        console.log( i + 1 + "번째 =" + arguments[i]);
-    }
-});
+// test("haha","kkk
 
-
-test(1,2,3,4,5,6,7,8,9);
+function Car() {}
+var myCar = new Car();
+console.log(myCar.constructor == Car());
+console.log(myCar.constructor.prototype === Car.prototype);
