@@ -31,5 +31,68 @@
 <li> $lt : 작은
 <li> $lte : 작거나 같은
 <li> $ne : != 일치하지 않는 값
-<li> $in : 배열안에 속하는 경우
-<li> $nin : 배열안에 속하지 않는 경우
+<li> $in : 배열 안에 속하는 경우
+<li> $nin : 배열 안에 속하지 않는 경우
+
+# commanjs
+
+<li> module.exports.변수이름 = 값 : 모듈 내보내기
+<li> require(파일) : 모듈 임포트
+
+
+```javascript
+var a = "hello";
+
+module.exports.a = a;
+module.exports.setA = ()=>{return "Return function"};
+
+function Myvar() {
+    this.name = "my Instance";
+}
+
+module.exports = Myvar;
+```
+
+```javascript
+
+//index.js 
+
+var myvar = require("./myvar");
+var setVar = new myvar();
+console.log(setVar.a);
+console.log(setVar.setA());
+console.log(setVar.name);
+
+```
+
+# Express
+
+package.json : 안드로이드의 Gradle과 같이 프로젝트와 관련된 모듈 및 설정을 담당
+npm init : package.josn 을 만듬
+npm install --save express : express 설치
+
+```javascript
+var express = require('express'); //익스프레스 모듈 불러오기
+
+var app = express(); //익스프레스 객체 생성
+var port = 3000;     //포ㅡ 번호 설정
+
+app.get('/',(req,res)=>{
+   res.send('first app'); 
+});
+
+app.listen( port, ()=>{
+   console.log('Express listening on port', port); 
+});
+```
+
+# 앱 서버 띄우기
+
+package.json의 스크립트 부분 변경
+
+```javascript
+  "scripts": {
+    "start": "node app.js"
+  },
+```
+
