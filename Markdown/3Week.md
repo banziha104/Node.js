@@ -75,7 +75,7 @@ npm install --save express : express 설치
 var express = require('express'); //익스프레스 모듈 불러오기
 
 var app = express(); //익스프레스 객체 생성
-var port = 3000;     //포ㅡ 번호 설정
+var port = 3000;     //포트 번호 설정
 
 app.get('/',(req,res)=>{
    res.send('first app'); 
@@ -86,13 +86,29 @@ app.listen( port, ()=>{
 });
 ```
 
+
+
+<br/>
+
+
+---
+
+
 # 앱 서버 띄우기
 
 package.json의 스크립트 부분 변경
 
 ```javascript
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "dev" : "node app.js"
   },
 ```
+
+
+# 기타
+
+nodemon : 스크립트가 바뀔때마다 서버를 내렸다 올려줌
+
+
 
