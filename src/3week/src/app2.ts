@@ -1,3 +1,5 @@
+import $ from 'jquery'
+
 var num = 2;
 var num2: number = 2;
 
