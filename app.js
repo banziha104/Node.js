@@ -19,6 +19,10 @@ db.once('open', ()=>{          //컨넥션 성공
 let connect = mongoose.connect('mongodb://127.0.0.1:27017/fastcampus', { useMongoClient: true }); //몽고db연결
 autoIncrement.initialize(connect);
 
+/*로거와 바디파서*/
+let logger = require('morgan');
+let bodyParser = require('body-parser');
+
 let admin = require('./routes/admin'); // admin.js 불러오기
 
 let app = express(); //익스프레스 객체 생성
@@ -26,6 +30,11 @@ let port = 3000;     //포트 번호 설정
 
 app.set('views', path.join(__dirname,'views')); // 현위치에 views 라는 폴더로 설정
 app.set('view engine','ejs');
+
+/*미들웨어 세팅*/
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended : false}));
 
 app.get('/',(req,res)=>{      //url 라우팅
    res.send('first app');
