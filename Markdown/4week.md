@@ -28,7 +28,18 @@ app.set('view engine','ejs');
 
 ```
 
+<br/>
+
+---
+
 # body-parser , morgan
 
 <li> body-parser : form 에서 넘어온 데이터를 javascript 객체로 맵핑해줌
 <li> morgan : post나 get 요청이  왔을시 console에 로깅 가능
+
+<br/>
+
+---
+
+# 
+

@@ -1,19 +1,17 @@
 <% include ../header.ejs %> <!--header.ejs 파일을 불러옮 -->
-
 <table class="table table-bordered table-hover">
     <tr>
         <th>제목</th>
         <th>작성일</th>
         <th>삭제</th>
     </tr>
+    <% products.forEach( function(product){%>
     <tr>
-        <td>제품 이름</td>
-        <td>
-            2017-07-15
-        </td>
-        <td>
-            <a href="#" class="btn btn-danger">삭제</a>
+        <td><%= product.name %>"</td>
+        <td><%= product.create_at %></td>
+        <td><a href="#" class="btn btn-danger">삭제</a>
         </td>
     </tr>
+    <% });%>
 </table>
 <% include ../footer.ejs%>

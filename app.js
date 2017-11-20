@@ -3,6 +3,7 @@ let express = require('express'); //익스프레스 모듈 불러오기
 /* MongoDB 접속부*/
 
 let mongoose = require('mongoose'); // 몽구스 불러오기
+mongoose.Promise = global.Promise; // 몽구스 자체 Promise를 내장 Promise로 변경
 let autoIncrement = require('mongoose-auto-increment');
 
 /* path */
