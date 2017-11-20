@@ -110,5 +110,10 @@ package.json의 스크립트 부분 변경
 
 nodemon : 스크립트가 바뀔때마다 서버를 내렸다 올려줌
 
+```javascript
+"scripts": {
+    "start": "nodemon app.js"
+  },
+```
 
 
