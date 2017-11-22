@@ -1,7 +1,7 @@
 /*스키마가 있는 모델을 설계*/
 let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
-let autuIncrement = require('mongoose-auto-increment');
+let autoIncrement = require('mongoose-auto-increment');
 
 /*객체 설계*/
 let ProductsSchema = new Schema({
@@ -14,8 +14,18 @@ let ProductsSchema = new Schema({
    }
 });
 
+/* 가상의 변수를 만듬 */
+ProductsSchema.virtual('getDate').get(function () {
+   let date = new Date(this.create_at);
+   console.log(this.create_at);
+   return{
+       year : date.getFullYear(),
+       month : date.getMonth()+1,
+       day : date.getDate()
+   };
+});
 
-ProductsSchema.plugin(autuIncrement.plugin , {
+ProductsSchema.plugin(autoIncrement.plugin , {
     model : 'products', //products라는 모델에
     field : 'id',         //field라는 필드를 가지고
     startAt: 1          //1부터 증가하는

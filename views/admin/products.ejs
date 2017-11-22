@@ -8,7 +8,11 @@
     <% products.forEach( function(product){%>
     <tr>
         <td><%= product.name %>"</td>
-        <td><%= product.create_at %></td>
+        <td>
+            <%= product.getDate.year%> -
+            <%= product.getDate.month%> -
+            <%= product.getDate.day%>
+        </td>
         <td><a href="#" class="btn btn-danger">삭제</a>
         </td>
     </tr>

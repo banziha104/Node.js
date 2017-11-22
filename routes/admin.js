@@ -16,7 +16,7 @@ router.get('/products',(req,res)=>{
 });
 
 router.get('/products/write', (req,res)=>{
-   res.render('admin/form');
+   res.render('admin/form', {product : ""});
 });
 
 router.post('/products/write',(req,res)=>{{
@@ -25,10 +25,36 @@ router.post('/products/write',(req,res)=>{{
        price : req.body.price,
        description : req.body.description,
     });
+
     console.log(req.body);
     product.save(function(err){        // mongoose의 DB에 저장
         console.log(err);
         res.redirect('/admin/products');
     });
+
 }});
+
+router.get('/products/detail/:id', (req,res)=>{
+   ProductModel.findOne({ 'id' : req.params.id } , (err,product)=>{
+       console.log(product.getDate);
+       res.render('admin/productsDetail',
+           {product : product})
+   })
+});
+
+router.get('/products/edit/:id', (req,res)=>{
+   ProductModel.findOne({'id' : req.params.id},(err,product)=>{
+       res.render('admin/form', {product : product})
+   });
+});
+router.post('/products/edit/:id', (req,res)=>{
+   var query = {
+       name : req.body.name,
+       price : req.body.price,
+       description : req.body.description,
+   };
+    ProductModel.update({ id : req.params.id }, { $set : query }, (err) => { // $set은 규
+        res.redirect('/admin/products/detail/' + req.params.id ); //수정후 본래보던 상세페이지로 이동
+    });
+});
 module.exports = router; // 작성한 라우터를 모듈화
