@@ -37,8 +37,9 @@ router.post('/products/write',(req,res)=>{{
 
 router.get('/products/detail/:id', (req,res)=>{
    ProductModel.findOne({ 'id' : req.params.id } , (err,product)=>{
-       res.render('admin/productsDetail',
-           {product : product})
+       CommentsModel.find({ product_id: req.params.id},(err,comments)=>{
+           res.render('admin/productsDetail', {product : product, comments : comments})
+       })
    })
 });
 
