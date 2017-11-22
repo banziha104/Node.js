@@ -13,7 +13,10 @@
             <%= product.getDate.month%> -
             <%= product.getDate.day%>
         </td>
-        <td><a href="#" class="btn btn-danger">삭제</a>
+        <td>
+            <a href="/admin/products/delete/<%=product.id%>" class="btn btn-danger"
+            onclick="return confirm('삭제하시겠습니까')">삭제 <!--onClick시 삭제하시겠습니까를 띄움-->
+            </a>
         </td>
     </tr>
     <% });%>
