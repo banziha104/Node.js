@@ -24,6 +24,14 @@ autoIncrement.initialize(connect);
 let logger = require('morgan');
 let bodyParser = require('body-parser');
 let cookieParser = require('cookie-parser');
+
+//flash  메시지 관련
+let flash = require('connect-flash');
+
+//passport 로그인 관련
+let passport = require('passport');
+let session = require('express-session');
+
 let admin = require('./routes/admin'); // admin.js 불러오기
 let accounts = require('./routes/account');
 
@@ -41,6 +49,27 @@ app.use(cookieParser());
 
 /*업로드 path 추가*/
 app.use('/uploads', express.static('uploads'));
+
+//session 관련 셋팅
+app.use(session({
+    secret: 'fastcampus',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        maxAge: 2000 * 60 * 60 //지속시간 2시간
+    }
+}));
+
+//passport 적용
+app.use(passport.initialize());
+app.use(passport.session());
+
+//플래시 메시지 관련
+app.use(flash());
+
+app.get('/', function(req,res){
+    res.send('first app');
+});
 
 app.get('/',(req,res)=>{      //url 라우팅
    res.send('first app');
