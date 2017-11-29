@@ -12,12 +12,19 @@
             <%= product.getDate.month %> -
             <%= product.getDate.day %>
         </div>
+        <% if(product.thumnail){%>
+        <p>
+            <img src="/uploads/<%= product.thumnail%>" style="max-width: 10px"/>
+        </p>
+        <% }%>
         <%= product.description %>
     </div>
     <hr />
     <div id="comment_area">
         <% comments.forEach((comment)=>{%>
-            <div><%= comment.content%></div>
+            <div><%= comment.content%>
+            ( <a class='comment_delete' comment_id='<%=comment.id%>'>삭제</a> )
+            </div>
         <% })%>
     </div>
     <div>
@@ -34,9 +41,11 @@
 <a href="/admin/products/edit/<%=product.id%>" class="btn btn-primary">수정</a>
 
 <script>
+
     (function(){
         $(document).ready(function() {
             $('#commentForm').submit(function(){
+                console.log("submit");
                 var $contentVal = $(this).children('textarea[name=content]').val();
                 if($contentVal){
                     $.ajax({
@@ -44,23 +53,43 @@
                         type: 'POST',
                         data: $(this).serialize(),
                     })
-                    .done(function(args) {
-                        if(args.message==="success"){
-                            $('#comment_area').append(
-                                '<div>' + args.content + '</div>'
-                            );
-                            $('#commentForm textarea[name=content]').val("");
-                        }
-                    })
-                    .fail(function(args) {
-                        console.log(args);
-                    });
-
+                        .done(function(args) {
+                            if(args.message==="success"){
+                                $('#comment_area').append(
+                                    '<div>' + args.content +
+                                    " ( <a class='comment_delete' comment_id='"+ args.id +"'>삭제</a> ) </div>"
+                                );
+                                $('#commentForm textarea[name=content]').val("");
+                            }
+                        })
+                        .fail(function(args) {
+                            console.log(args);
+                        });
                 }else{
                     alert('댓글 내용을 입력해주세요.')
                 }
                 return false;
             });
+        });
+
+
+
+        $(document).on('click' , '.comment_delete' , function(){
+            if(confirm('삭제하시겠습니까?')){ //확인창 예 눌렀을 시만 진행
+                var $self = $(this);
+                $.ajax({
+                    url: '/admin/products/ajax_comment/delete',
+                    type: 'POST',
+                    data: { comment_id : $self.attr('comment_id') },
+                })
+                    .done(function() {
+                        $self.parent().remove();
+                        alert("삭제가 완료되었습니다.");
+                    })
+                    .fail(function(args) {
+                        console.log(args);
+                    });
+            }
         });
     })();
 </script>

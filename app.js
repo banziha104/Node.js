@@ -23,8 +23,9 @@ autoIncrement.initialize(connect);
 /*로거와 바디파서*/
 let logger = require('morgan');
 let bodyParser = require('body-parser');
-
+let cookieParser = require('cookie-parser');
 let admin = require('./routes/admin'); // admin.js 불러오기
+let accounts = require('./routes/account');
 
 let app = express(); //익스프레스 객체 생성
 let port = 3000;     //포트 번호 설정
@@ -36,12 +37,17 @@ app.set('view engine','ejs');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended : false}));
+app.use(cookieParser());
+
+/*업로드 path 추가*/
+app.use('/uploads', express.static('uploads'));
 
 app.get('/',(req,res)=>{      //url 라우팅
    res.send('first app');
 });
 
 app.use('/admin',admin); // /admin url이 들어오면 admin을 사용( url 분기)
+app.use('/accounts',accounts);
 
 app.listen( port, ()=>{
    console.log('Express listening on port', port);

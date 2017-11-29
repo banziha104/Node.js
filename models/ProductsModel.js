@@ -5,13 +5,18 @@ let autoIncrement = require('mongoose-auto-increment');
 
 /*객체 설계*/
 let ProductsSchema = new Schema({
-   name : String,
+   name : {
+       type : String,
+       required : [true, '제목을 입력해주세요']
+   },
+    thumnail: String,
    price : Number,
    description: String,
    create_at : {
        type : Date,
        default : Date.now()
    }
+
 });
 
 /* 가상의 변수를 만듬 */
@@ -27,7 +32,7 @@ ProductsSchema.virtual('getDate').get(function () {
 
 ProductsSchema.plugin(autoIncrement.plugin , {
     model : 'products', //products라는 모델에
-    field : 'id',         //field라는 필드를 가지고
+    field : 'id',       //field라는 필드를 가지고
     startAt: 1          //1부터 증가하는
 });
 
