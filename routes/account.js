@@ -7,13 +7,15 @@ let LocalStrategy = require('passport-local').Strategy;
 
 /*시리얼 라이저 및 디시리얼 라이저 설정*/
 passport.serializeUser((user,done)=>{
-   console.log('serializeUser');
-   done(null,user);
+    console.log('serializeUser');
+    done(null,user);
 });
 
 passport.deserializeUser((user,done)=>{
-   console.log('deserializeUser');
-   done(null,user);
+    let result = user;
+    user.password ="";
+    console.log('deserializeUser');
+    done(null,user);
 });
 
 /*정책 설정*/
@@ -52,7 +54,7 @@ router.post('/join', (req, res) => {
 });
 
 router.get('/login', function (req, res) {
-    res.render('accounts/login', {flashMessage: req.flash().error});
+    res.render('accounts/login', {flashMessage: req.flash().error}); // 플레시 메세지 내보네기
 });
 
 router.post('/login',
