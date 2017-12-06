@@ -42,7 +42,9 @@
                 $('#userList').append('<li>' + userList[key] + '</li>');
             }
         }
-
+        socket.on('leave', function(data){
+            updateUserList(data);
+        });
         socket.on('join', function(data){
             updateUserList(data);
         });
@@ -57,6 +59,7 @@
                 return false;
             });
         });
+
     })();
 </script>
 <% include ../footer.ejs %>

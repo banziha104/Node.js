@@ -37,6 +37,7 @@ let accounts = require('./routes/account');
 let auth = require('./routes/auth');
 let home = require('./routes/home');
 let chat = require('./routes/chat');
+let products = require('./routes/products');
 
 let app = express(); //익스프레스 객체 생성
 let port = 3000;     //포트 번호 설정
@@ -104,7 +105,7 @@ app.use('/accounts', accounts);
 app.use('/auth', auth);
 app.use('/', home);
 app.use('/chat', chat);
-
+app.use('/products',products);
 // app.listen( port, ()=>{
 //    console.log('Express listening on port', port);
 // });

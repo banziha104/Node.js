@@ -3,6 +3,7 @@ let router = express.Router(); // 익스프레스의 라우터 모듈 추가
 let ProductModel = require('../models/ProductsModel'); //모델 임포트
 let CommentsModel = require('../models/CommentsModel');
 let loginRequired = require('../libs/loginRequired');
+let co = require('co');
 
 /*csrf 셋팅 */
 let csrf = require('csurf');
@@ -75,11 +76,18 @@ router.post('/products/write', loginRequired , upload.single('thumbnail'), csrfP
 });
 
 router.get('/products/detail/:id', (req, res) => {
-    ProductModel.findOne({'id': req.params.id}, (err, product) => {
-        CommentsModel.find({product_id: req.params.id}, (err, comments) => {
-            res.render('admin/productsDetail', {product: product, comments: comments})
-        })
-    })
+    let getData = co(function* (){
+        let product = yield ProductsModel.findOne( { 'id' :  req.params.id }).exec();
+        console.log(product);
+        let comments = yield CommentsModel.find( { 'product_id' :  req.params.id }).exec();
+        return {
+            product : product,
+            comments : comments
+        };
+    });
+    getData.then( function(result){
+        res.send(result);
+    });
 });
 
 router.get('/products/edit/:id', csrfProtection, (req, res) => {
@@ -130,5 +138,7 @@ router.post('/products/ajax_comment/insert', loginRequired, (req, res) => {
         });
     });
 });
-
+router.post('/products/ajax_summernote', loginRequired, upload.single('thumbnail'), function(req,res){
+    res.send( '/uploads/' + req.file.filename);
+});
 module.exports = router; // 작성한 라우터를 모듈화

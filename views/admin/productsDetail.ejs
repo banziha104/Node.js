@@ -11,6 +11,7 @@
             <%= product.getDate.year %> -
             <%= product.getDate.month %> -
             <%= product.getDate.day %>
+
         </div>
         <% if(product.thumnail){%>
         <p>
@@ -20,6 +21,9 @@
         <%= product.description %>
     </div>
     <hr />
+
+    <%-product.description%>
+
     <div id="comment_area">
         <% comments.forEach((comment)=>{%>
             <div><%= comment.content%>
