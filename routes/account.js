@@ -53,17 +53,16 @@ router.post('/join', (req, res) => {
     });
 });
 
-router.get('/login', function (req, res) {
-    res.render('accounts/login', {flashMessage: req.flash().error}); // 플레시 메세지 내보네기
+router.get('/login',(req,res)=>{
+   res.render('accounts/login');
 });
-
-router.post('/login',
+router.post('/login' ,
     passport.authenticate('local', {
         failureRedirect: '/accounts/login',
         failureFlash: true
     }),
-    function (req, res) {
-        res.send('<script>alert("로그인 성공");location.href="/accounts/success";</script>');
+    function(req, res){
+        res.send('<script>alert("로그인 성공");location.href="/";</script>');
     }
 );
 
