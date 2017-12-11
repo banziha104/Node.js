@@ -26,6 +26,12 @@
 
         <form action="" method="post">
 
+            <!--가격 -->
+            <input type="hidden" name="price" value="<%=product.price%>">
+            <!--갯수 -->
+            <input type="hidden" name="number" value="1">
+            <!--선택한 갯수 * 가격 = 구매가격 -->
+            <input type="hidden" name="amount" value="<%=product.price%>">
             <div>
                 <div class="printNum">갯수 : </div>
                 <div class="CountBox">
@@ -80,7 +86,35 @@
         content : " 원";
     }
 </style>
+<script>
+    $(document).ready(function(){
+        $('.CountBox a').click(function(event){
+            event.preventDefault();
+            //타입을 받아온다
+            var type = $(this).attr('type');
 
+            //현재 장바구니에 담을 갯수를 저장
+            var cartNum = $('input[name=number]').val();
+
+            //현재 제품의 가격표
+            var price = $('input[name=price]').val();
+            if(type==='minus'){ //+,- 냐에 따라 나눈다
+                cartNum -= ( (cartNum==1) ? 0 : 1 ); //1이하로는 못내려가게 한다
+            }else if(type==='plus'){
+                cartNum++;
+            }
+            //input 태그에 반영 , html페이지 에도 반영
+            $('input[name=number]').val(cartNum);
+            $('#amountHtml').html(cartNum);
+            $('input[name=amount]').val(cartNum * price);
+            $('#priceHtml').html(cartNum * price);
+
+
+        });
+
+    });
+
+</script>
 
 
 <% include ../footer.ejs %>
