@@ -1,24 +1,27 @@
 <% include ../header.ejs %> <!--header.ejs 파일을 불러옮 -->
-<table class="table table-bordered table-hover">
-    <tr>
-        <th>제목</th>
-        <th>작성일</th>
-        <th>삭제</th>
-    </tr>
-    <% products.forEach( function(product){%>
-    <tr>
-        <td><%= product.name %>"</td>
-        <td>
-            <%= product.getDate.year%> -
-            <%= product.getDate.month%> -
-            <%= product.getDate.day%>
-        </td>
-        <td>
-            <a href="/admin/products/delete/<%=product.id%>" class="btn btn-danger"
-            onclick="return confirm('삭제하시겠습니까')">삭제 <!--onClick시 삭제하시겠습니까를 띄움-->
-            </a>
-        </td>
-    </tr>
-    <% });%>
-</table>
-<% include ../footer.ejs%>
+<% include ./sidebar.ejs %>
+<div class="col-sm-10">
+    <table class="table table-bordered table-hover">
+        <tr>
+            <th>제목</th>
+            <th>작성일</th>
+            <th>삭제</th>
+        </tr>
+        <% products.forEach( function(product){ %>
+        <tr>
+            <td><%= product.name %>"</td>
+            <td>
+                <%= product.getDate.year %> -
+                <%= product.getDate.month %> -
+                <%= product.getDate.day %>
+            </td>
+            <td>
+                <a href="/admin/products/delete/<%= product.id %>" class="btn btn-danger"
+                   onclick="return confirm('삭제하시겠습니까')">삭제 <!--onClick시 삭제하시겠습니까를 띄움-->
+                </a>
+            </td>
+        </tr>
+        <% }); %>
+    </table>
+</div>
+<% include ../footer.ejs %>

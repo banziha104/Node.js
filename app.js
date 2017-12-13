@@ -38,6 +38,8 @@ let auth = require('./routes/auth');
 let home = require('./routes/home');
 let chat = require('./routes/chat');
 let products = require('./routes/products');
+let cart = require('./routes/cart');
+let checkout = require('./routes/checkout');
 
 let app = express(); //익스프레스 객체 생성
 let port = 3000;     //포트 번호 설정
@@ -55,6 +57,7 @@ app.use(cookieParser());
 
 /*업로드 path 추가*/
 app.use('/uploads', express.static('uploads'));
+app.use('/static', express.static('static'));
 
 
 //session 관련 셋팅
@@ -93,7 +96,7 @@ app.use(flash());
 app.use((req, res, next) => {
     //로그인 정보 뷰에서만 변수로 셋팅, 전체 미들웨어는 router위에 두어야 에러가 안난다
     app.locals.isLogin = req.isAuthenticated(); // passport에서 자동으로만들어
-    app.locals.myname = "hello";
+    app.locals.userData = req.user;
     //app.locals.urlparameter = req.url; //현재 url 정보를 보내고 싶으면 이와같이 셋팅
     //app.locals.userData = req.user; //사용 정보를 보내고 싶으면 이와같이 셋팅
     next()
@@ -106,9 +109,13 @@ app.use('/auth', auth);
 app.use('/', home);
 app.use('/chat', chat);
 app.use('/products',products);
+app.use('/cart',cart);
+app.use('/checkout',checkout);
 // app.listen( port, ()=>{
 //    console.log('Express listening on port', port);
 // });
+
+'== != <= >= -> => <- '
 
 let server = app.listen(port, () => {
     console.log('Express listening on port', port);

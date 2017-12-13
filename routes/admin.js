@@ -4,6 +4,8 @@ let ProductModel = require('../models/ProductsModel'); //모델 임포트
 let CommentsModel = require('../models/CommentsModel');
 let loginRequired = require('../libs/loginRequired');
 let co = require('co');
+let CheckoutModel = require('../models/CheckoutModel');
+let adminRequired = require('../libs/adminRequired');
 
 /*csrf 셋팅 */
 let csrf = require('csurf');
@@ -50,11 +52,11 @@ router.get('/products', (req, res) => {
     // });
 });
 
-router.get('/products/write', loginRequired, upload.single('thumbnail'), csrfProtection, (req, res) => {
+router.get('/products/write',adminRequired, upload.single('thumbnail'), csrfProtection, (req, res) => {
     res.render('admin/form', {product: "", csrfToken: req.csrfToken()});
 });
 
-router.post('/products/write', loginRequired , upload.single('thumbnail'), csrfProtection, (req, res) => {
+router.post('/products/write',adminRequired , upload.single('thumbnail'), csrfProtection, (req, res) => {
     {
         let product = new ProductModel({
             name: req.body.name,
@@ -138,7 +140,29 @@ router.post('/products/ajax_comment/insert', loginRequired, (req, res) => {
         });
     });
 });
+
 router.post('/products/ajax_summernote', loginRequired, upload.single('thumbnail'), function(req,res){
     res.send( '/uploads/' + req.file.filename);
 });
+
+router.get('/order', function(req,res){
+  CheckoutModel.find( function(err, orderList){ //첫번째 인자는 err, 두번째는 받을 변수명
+    res.render( 'admin/orderList' ,
+      { orderList : orderList }
+    );
+  });
+});
+
+router.get('/order/edit/:id', function(req,res){
+  CheckoutModel.findOne( { id : req.params.id } , function(err, order){
+    res.render( 'admin/orderForm' ,
+      { order : order }
+    );
+  });
+});
+
+router.get('/statistics', adminRequired, function(req,res){
+  res.render('admin/statistics');
+});
+
 module.exports = router; // 작성한 라우터를 모듈화

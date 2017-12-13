@@ -1,5 +1,7 @@
 <% include ../header.ejs %>
-<form action="" method="post" enctype="multipart/form-data" id="editForm">
+<% include ./sidebar.ejs%>
+<div class="col-sm-10">
+    <form action="" method="post" enctype="multipart/form-data" id="editForm">
     <input type="hidden" name="_csrf" value="<%=csrfToken%>"/>
     <table class="table table-bordered">
         <tr>
@@ -61,5 +63,6 @@
     });
 
 </script>
+</div>
 
 <% include ../footer.ejs %>
