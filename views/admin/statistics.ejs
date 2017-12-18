@@ -28,9 +28,14 @@
       ['날짜', '결제자수', { role: 'annotation' } ],
 
       //그다음부터 데이터
-      ["08-10", 10 , "(10)"],
-      ["08-11", 20 , "(20)"],
-
+        <% for( key in barData ){
+        if(typeof barData[key] === 'number'){
+        %>
+      ["<%=key%>", <%=barData[key]%> , "(<%=barData[key]%>)"],
+        <%
+        }
+        }
+        %>
     ]);
 
     //차트 상단에 나올 제목, 차트 전체에 세로 길이등을 지정
@@ -49,15 +54,23 @@
   // 파이 차트(원형 도넛)를 그린다.
   google.charts.setOnLoadCallback(drawpie);
   function drawpie() {
-    let data = google.visualization.arrayToDataTable([
+    var data = google.visualization.arrayToDataTable([
       ['Task', 'Hours per Day'],
-      ['결재자',  50],
-      ['미결재자',  10]
+
+        <% for( key in pieData ){
+        if(typeof pieData[key] === 'number'){
+        %>
+      ['<%=key%>',  <%=pieData[key]%>],
+        <%
+        }
+        }
+        %>
     ]);
 
-    let options = {
-      title: '상품 상태',
+    var options = {
+      title: '상품상태',
     };
+
     var chart = new google.visualization.PieChart(document.getElementById('pieChart'));
     chart.draw(data, options);
   }
