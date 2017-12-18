@@ -75,10 +75,19 @@ sudo service nginx reload
 # Node.js & Nginx 배포 세팅
 
 1. pm2 start app.js : pm2로 시작
-2. aws 콘솔에서 3000번 포트 삭
+2. aws 콘솔에서 3000번 포트 삭제
 3. cd /etc/nginx : nginx 폴더로 이동
 4. /etc/nginx/nginx.conf : nginx가 처음 실행 될때의 파일이 모아져 있음
 5. /etc/nginx/conf.d/default.conf : 현재 location이나 프록시 설정
 6. cd /etc/nginx/conf.d 
-7. sudo vi default.conㄹ : 파일을 수정
-8.
+7. sudo vi default.conf : 파일을 수정
+8. location 부분을 아래로 바꿈
+
+```
+location / {
+        proxy_pass http://127.0.0.1:3000/;
+    }
+```
+
+9.sudo service nginx reload
+
