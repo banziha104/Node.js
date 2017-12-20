@@ -10,8 +10,17 @@
 
 # DockerHub
 
-1. docker search ubuntu
-2. 
+* docker search ubuntu 
+* docker pull ubuntu:latest : 우분투 이미지를 가져옮
+* docker run ubuntu:latest /bin/echo 'Hello World’ : 헬로월드 찍어보기
+* docker run –it centos /bin/bash : 리눅스 centOS에 접속 (-it는 표준입력을 뜻함)
+* docker images : 이미지들 확
+
+# 이미지 삭
+
+1. docker rmi <이미지명>
+2.
+
 # Docker 용어
 
 * 도커 이미지 : 우분투 + nodejs + express 등 실행할 서비스들을 패키지화 해놓음
