@@ -141,7 +141,65 @@ http {
 }
 ```
 
+10. mkdir node : 노드폴더생성
+11. cd node : 노드로 이동
+12. vi Dockerfile : 도커파일 작성
 
+```yaml
+# node 컨테이너 기반
+FROM node
 
+# node_modules를 설치하게 소스 폴더로 옴긴다
+# 잠시 tmp 캐시 폴더에 저장한다
+ADD package.json /tmp/package.json
+RUN cd /tmp && npm install
+RUN mkdir -p /src && cp -a /tmp/node_modules /src/
 
+# 작업디렉토리를 생성하고 현 소스파일들을 전체를 붙여 넣는다.
+WORKDIR /src
+ADD . /src
 
+# Expose port
+EXPOSE  3000
+
+# Run app using nodemon
+CMD ["node", "/src/index.js"]
+```
+
+13. package.json 작
+
+```yaml
+{
+  "name": "node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "park junyoung",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.12.3",
+    "mongoose": "^4.11.2",
+    "mongodb": "^2.2.30",
+    "mongoose-auto-increment": "^5.0.1"
+  }
+}
+```
+
+14. vi app.js : 몽고디비 접속부분 url 수정
+
+```yaml
+var db = mongoose.connection;
+db.on('error', console.error);
+db.once('open', function(){
+    console.log('mongodb connect');
+});
+
+var connect = mongoose.connect('mongodb://db_url/fastcampus', { useMongoClient: true });
+autoIncrement.initialize(connect);
+```
+
+15. vi ./node/Dockerfile 수정
+
+```yaml
+CMD ["node", "/src/app.js"] 
+```
