@@ -13,8 +13,9 @@
 * docker search ubuntu 
 * docker pull ubuntu:latest : 우분투 이미지를 가져옮
 * docker run ubuntu:latest /bin/echo 'Hello World’ : 헬로월드 찍어보기
-* docker run –it centos /bin/bash : 리눅스 centOS에 접속 (-it는 표준입력을 뜻함)
+* docker run -it centos /bin/bash : 리눅스 centOS에 접속 (-it는 표준입력을 뜻함)
 * docker images : 이미지들 확
+* docker run -d -p 80:80 --name webserver nginx : nignx 실행
 
 # 이미지 삭
 
